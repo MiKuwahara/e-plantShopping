@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
@@ -9,30 +9,53 @@ const CartItem = ({ onContinueShopping }) => {
 
     // Calculate total amount for all products in the cart
     const calculateTotalAmount = () => {
-    
+        let totalAmount = 0;
+        cart.forEach((item) => {
+            console.log("Item Cost: ", item.cost);
+            let newCost = item.cost.replace("$", "");
+            console.log("Item Cost: ", newCost);
+            totalAmount += parseInt(newCost) * parseInt(item.quantity);
+        });
+
+        return totalAmount;
     };
 
+    // Navigate back to the product page
     const handleContinueShopping = (e) => {
-    
+        onContinueShopping();
     };
 
-
-
+    // Increment product quantity by one
     const handleIncrement = (item) => {
-        dispatch(updateQuantity(item));
+        dispatch(increaseItemQuantity(item));
     };
 
+    // Decrement quantity
     const handleDecrement = (item) => {
-        dispatch(updateQuantity(item));
+        if(item.quantity > 1){
+            dispatch(decreaseItemQuantity(item));
+        }else { // Delete item from cart if qty goes below 1
+            dispatch(removeItem(item));
+        }
+        
     };
 
+    // Delete product from cart
     const handleRemove = (item) => {
         dispatch(removeItem(item));
     };
 
     // Calculate total cost based on quantity for an item
     const calculateTotalCost = (item) => {
+        let newCost = item.cost.replace("$", "");
+        console.log("New Cost: ", newCost);
+        return parseInt(newCost) * parseInt(item.quantity);
     };
+
+    const handleCheckoutShopping = (e) => {
+        alert('Functionality to be added for future reference');
+      };
+
 
     return (
         <div className="cart-container">
@@ -57,9 +80,9 @@ const CartItem = ({ onContinueShopping }) => {
         </div>
         <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
         <div className="continue_shopping_btn">
-            <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
+            <button className="get-started-button" onClick={onContinueShopping}>Continue Shopping</button>
             <br />
-            <button className="get-started-button1">Checkout</button>
+            <button className="get-started-button1" onClick={handleCheckoutShopping}>Checkout</button>
         </div>
         </div>
     );
