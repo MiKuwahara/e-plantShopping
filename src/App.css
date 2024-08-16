@@ -38,12 +38,12 @@
 
 .landing_content {
  margin-top: 430px;
-  margin-left: 100px;
+  margin-left: 250px;
   transform: translate(-50%, -50%);
   z-index: 1;
   text-align: center;
   /* background-color: red; */
-  width: 400px;
+  width: 500px;
   height: 400px;
   display: flex;
   align-items: center;
@@ -58,12 +58,12 @@
 }
 
 .content h1 {
-  font-size: 48px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
 .content p {
-  font-size: 25px;
+  font-size: 19.5px;
 }
 
 .divider {
@@ -89,6 +89,9 @@
   background-color: #45a049;
 }
 
+.aboutus_container{
+  margin: 20px;
+}
 /* ProductList.css */
 
 .product-list-container {

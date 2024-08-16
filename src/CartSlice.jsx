@@ -17,18 +17,6 @@ export const CartSlice = createSlice({
                 state.items.push({name, image, cost, quantity:1});
             }
         },
-        // addItemToCart(state, action) {
-        //     const {name, image, cost} = action.payload;
-        //     const existingItem = state.items.find(item => item.name === name);
-        //     if (existingItem) {
-        //       existingItem.quantity += 1;
-        //       console.log('h1');
-        //     } else {
-        //       // Push new item containing its old attributes plus quantity
-        //       state.items.push({name, image, cost, quantity: 1 });
-        //       console.log('h2');
-        //     }
-        //   },
         removeItem: (state, action) => {
             state.items = state.items.filter(item => item.name !== action.payload.name);
         },
@@ -45,9 +33,7 @@ export const CartSlice = createSlice({
             const itemToIncrease = state.items.find(item => item.name === action.payload.name);
             if (itemToIncrease) {
               itemToIncrease.quantity += 1;
-              console.log(itemToIncrease.quantity);
             }
-            console.log('Hello');
           },
           decreaseItemQuantity(state, action) {
             const itemToDecrease = state.items.find(item => item.name === action.payload.name);

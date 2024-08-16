@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity, increaseItemQuantity, decreaseItemQuantity } from './CartSlice';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
+const CartItem = ({ onContinueShopping, update }) => {
     const cart = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
 
@@ -11,9 +11,7 @@ const CartItem = ({ onContinueShopping }) => {
     const calculateTotalAmount = () => {
         let totalAmount = 0;
         cart.forEach((item) => {
-            console.log("Item Cost: ", item.cost);
             let newCost = item.cost.replace("$", "");
-            console.log("Item Cost: ", newCost);
             totalAmount += parseInt(newCost) * parseInt(item.quantity);
         });
 
@@ -35,7 +33,8 @@ const CartItem = ({ onContinueShopping }) => {
         if(item.quantity > 1){
             dispatch(decreaseItemQuantity(item));
         }else { // Delete item from cart if qty goes below 1
-            dispatch(removeItem(item));
+            //dispatch(removeItem(item));
+            handleRemove(item);
         }
         
     };
@@ -43,12 +42,12 @@ const CartItem = ({ onContinueShopping }) => {
     // Delete product from cart
     const handleRemove = (item) => {
         dispatch(removeItem(item));
+        update(item);
     };
 
     // Calculate total cost based on quantity for an item
     const calculateTotalCost = (item) => {
         let newCost = item.cost.replace("$", "");
-        console.log("New Cost: ", newCost);
         return parseInt(newCost) * parseInt(item.quantity);
     };
 
