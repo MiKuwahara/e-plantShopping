@@ -9,14 +9,13 @@ function ProductList() {
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
     const [cartQtyCount, setCartQtyCount] = useState(0);
+    const [disabledProducts, setDisabledProducts] = useState([]); // State to store disabled products
 
     const cart = useSelector(state => state.cart.items);
     const totalQty = cart.reduce((total, item) => total + item.quantity, 0);
-    console.log(totalQty);
 
     const dispatch = useDispatch();
     
-
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -262,18 +261,24 @@ function ProductList() {
         setShowCart(false);
     };
 
-
     const handleAddToCart = product => {
         dispatch(addItem(product));
         setAddedToCart((prevState) => ({
             ...prevState,
             [product.name]: true
         }));
-        // setDisabledProducts([...disabledProducts, product.id]); // Mark the product as disabled
+        setDisabledProducts([...disabledProducts, product.name]); // Mark the product as disabled
       };
 
+    const update = product => {
+        console.log("BEfore spice: ", disabledProducts);
+        let newarray = disabledProducts.filter(itemName => itemName !== product.name);
+        console.log("Product Name: ", product);
+        console.log("After spice: ", newarray);
+        setDisabledProducts(newarray);
+    }
+
     useEffect(() => {
-        console.log(totalQty);
         setCartQtyCount(totalQty);
     },[totalQty]);
 
@@ -321,7 +326,12 @@ function ProductList() {
                                         <div className="product-title">{plant.name}</div>
                                         <div className="product-description">{plant.description}</div>
                                         <div className="product-cost">{plant.cost}</div>
-                                        <button className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                        <button 
+                                            className={`product-button ${disabledProducts.includes(plant.name) ? 'added-to-cart' : ''}`} 
+                                            onClick={() => handleAddToCart(plant)}
+                                            disabled={disabledProducts.includes(plant.name)} // Disable button if product is in disabledProducts
+                                        >Add to Cart</button>
+                                        
                                     </div>
                                 ))}
                             </div>
@@ -329,7 +339,7 @@ function ProductList() {
                     ))}
                 </div>
                 ) :  (
-                    <CartItem onContinueShopping={handleContinueShopping}/>
+                    <CartItem onContinueShopping={handleContinueShopping} update={update}/>
                 )}
         </div>
     );
