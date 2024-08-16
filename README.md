@@ -1,4 +1,3 @@
-
 # Paradise Nursery Shopping Application
 
 The __*Paradise Nursery*__ is a shopping cart application for an online plant shop which offers a variety of house plants. This application is the final project of IBM's Developing Front-End Apps with React at Coursera.
