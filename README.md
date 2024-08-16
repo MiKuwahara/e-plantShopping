@@ -12,7 +12,7 @@ __Project features include:__
 - The cart should have a card for each type of plant in the cart. Each card should have the thumbnail, the unit cost, the cost for all of the plants of that type and buttons to increase and decrease the quantity along with Delete button.
 - A Continue Shopping and Checkout buttons
 
-
+:point_right: [Live Demo](https://mikuwahara.github.io/e-plantShopping/) :point_left:
 ## Running the application on your local machine
 
 ### Cloning the repository
